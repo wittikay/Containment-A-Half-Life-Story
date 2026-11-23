@@ -45,7 +45,7 @@
       height: 100%;
     }
 
-    /* The existing gold strip occupies the last 56 rows of the 720px cover. */
+    /* Text fallback for a missing cover; the full-resolution artwork includes the title. */
     .wordmark {
       position: absolute;
       bottom: 0;
@@ -63,6 +63,9 @@
       line-height: 1;
       white-space: nowrap;
     }
+
+    .artwork:not([hidden]) + .wordmark { opacity: 0; }
+    .artwork[hidden] { visibility: hidden; }
 
     .wordmark-name {
       letter-spacing: 0.12em;
@@ -102,7 +105,7 @@
 </head>
 <body>
   <main class="cover">
-    <img class="artwork" id="artwork" src="./containment-overwatch-faded-720p.png"
+    <img class="artwork" id="artwork" src="./containment-cover-4k.png"
          alt="A glowing Overwatch helmet above infected creatures chasing a fleeing citizen">
     <h1 class="wordmark" aria-label="Containment: A Half-Life Story">
       <span class="wordmark-name" aria-hidden="true">CONT<span class="lambda">λ</span>INMENT:</span>
@@ -119,8 +122,10 @@
         statusElement.textContent = status == null ? "Connecting to Containment…" : String(status);
       };
 
-      document.getElementById("artwork").addEventListener("error", function () {
-        this.style.visibility = "hidden";
+      var artwork = document.getElementById("artwork");
+      if (artwork.complete && !artwork.naturalWidth) artwork.hidden = true;
+      artwork.addEventListener("error", function () {
+        this.hidden = true;
       });
     }());
   </script>
