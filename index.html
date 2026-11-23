@@ -5,43 +5,111 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Containment: A Half-Life Story — Connecting</title>
   <style>
+    @font-face {
+      font-family: "Barlow Condensed";
+      src: url("./fonts/barlow-condensed-bold.woff2") format("woff2");
+      font-weight: 700;
+      font-display: swap;
+    }
+
     html, body {
       width: 100%;
       height: 100%;
       margin: 0;
       overflow: hidden;
       background: #000;
+      font-family: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+    }
+
+    .cover {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 100vw;
+      height: 56.25vw;
+      transform: translate(-50%, -50%);
+      font-size: 4.2vw;
+    }
+
+    @media (min-aspect-ratio: 16/9) {
+      .cover {
+        width: 177.7778vh;
+        height: 100vh;
+        font-size: 7.4667vh;
+      }
     }
 
     .artwork {
-      position: fixed;
-      top: 0;
-      left: 0;
+      display: block;
       width: 100%;
       height: 100%;
-      object-fit: contain;
-      object-position: center;
+    }
+
+    /* The existing gold strip occupies the last 56 rows of the 720px cover. */
+    .wordmark {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 7.7778%;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f5b638;
+      color: #151309;
+      font-size: inherit;
+      font-weight: 700;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .wordmark-name {
+      letter-spacing: 0.12em;
+    }
+
+    .wordmark-story {
+      margin-left: 0.54em;
+      font-size: 0.62em;
+      letter-spacing: 0.14em;
+    }
+
+    .lambda {
+      font-family: Arial, sans-serif;
+      font-size: 0.92em;
     }
 
     .status {
-      position: fixed;
-      left: 20px;
-      bottom: 16px;
+      position: absolute;
+      bottom: calc(7.7778% + 12px);
+      left: 50%;
+      transform: translateX(-50%);
       box-sizing: border-box;
-      max-width: calc(100% - 40px);
+      width: max-content;
+      max-width: calc(100% - 24px);
       margin: 0;
-      padding: 8px 12px;
+      padding: 4px 10px;
       color: #e7e5dd;
       background: rgba(0, 0, 0, 0.78);
-      font: 13px/1.5 "Courier New", monospace;
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.35;
+      letter-spacing: 0.05em;
+      text-align: center;
       overflow-wrap: break-word;
     }
   </style>
 </head>
 <body>
-  <img class="artwork" id="artwork" src="./containment-overwatch-faded-720p.png"
-       alt="Containment: A Half-Life Story — a glowing Overwatch helmet above infected creatures chasing a fleeing citizen">
-  <p class="status" id="status" role="status" aria-live="polite">Connecting to Containment…</p>
+  <main class="cover">
+    <img class="artwork" id="artwork" src="./containment-overwatch-faded-720p.png"
+         alt="A glowing Overwatch helmet above infected creatures chasing a fleeing citizen">
+    <h1 class="wordmark" aria-label="Containment: A Half-Life Story">
+      <span class="wordmark-name" aria-hidden="true">CONT<span class="lambda">λ</span>INMENT:</span>
+      <span class="wordmark-story" aria-hidden="true"><span class="lambda">λ</span> H<span class="lambda">λ</span>LF-LIFE STORY</span>
+    </h1>
+    <p class="status" id="status" role="status" aria-live="polite">Connecting to Containment…</p>
+  </main>
 
   <script>
     (function () {
